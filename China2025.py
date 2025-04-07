@@ -13,22 +13,23 @@ from sklearn.metrics import mean_absolute_error
 fastf1.Cache.enable_cache("cache_folder")
 
 # 2024 Race session data.
-session_2024 = fastf1.get_session(2024,'Australia','R')
+session_2024 = fastf1.get_session(2024,'China','R')
 session_2024.load()
 
 # -- Extract lap times --
 # We .copy() cause we are modifying the data.
-laps_2024 = session_2024.laps[["Driver","LapTime"]].copy()
+laps_2024 = session_2024.laps[["Driver","LapTime","Sector1Time","Sector2Time","Sector3Time"]].copy()
 
 # -- Clean the data --
 # Subset to select where we are looking for NAs
 # Inplace = True to modify the current df rather than creating a new one.
-laps_2024.dropna(subset=["LapTime"],inplace=True)
+laps_2024.dropna(inplace=True)
 
-# Create a new column to have the time in seconds:
-laps_2024["LapTime (s)"] = laps_2024["LapTime"].dt.total_seconds()
+# Create a columns to have the times in seconds:
+for col in ["Driver","LapTime","Sector1Time","Sector2Time","Sector3Time"]:
+    laps_2024[f"{col} (s)"] = laps_2024[col].dt.total_seconds()
 
-# 2025 Qualifying session data:
+# -- 2025 Qualifying session data --
 
 drivers = """Oscar Piastri
 George Russell
@@ -53,26 +54,26 @@ Liam Lawson"""
 
 drivers = drivers.strip().split('\n')
 
-times = """90,64
-90,723
-90,793
-90,817
-90,927
-91,021
-91,079
-91,103
-91,638
-91,706
-91,625
-91,632
-91,688
-91,773
-91,840
-91,992
-92,018
-92,092
-92,141
-92,174
+times = """90.641
+90.723
+90.793
+90.817
+90.927
+91.021
+91.079
+91.103
+91.638
+91.706
+91.625
+91.632
+91.688
+91.773
+91.84
+91.992
+92.018
+92.092
+92.141
+92.174
 """
 times = times.strip().split('\n')
 
