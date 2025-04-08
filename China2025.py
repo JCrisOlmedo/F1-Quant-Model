@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error
+from qualifying_data_cleanser import qf_cleanser
 
 """
     2024 Chinese F1 GP 
@@ -18,7 +19,7 @@ session_2024.load()
 
 # -- Extract lap times --
 # We .copy() cause we are modifying the data.
-laps_2024 = session_2024.laps[["Driver","LapTime","Sector1Time","Sector2Time","Sector3Time"]].copy()
+laps_2024 = session_2024.laps[["Driver","LapTime"]].copy()
 
 # -- Clean the data --
 # Subset to select where we are looking for NAs
@@ -26,63 +27,13 @@ laps_2024 = session_2024.laps[["Driver","LapTime","Sector1Time","Sector2Time","S
 laps_2024.dropna(inplace=True)
 
 # Create a columns to have the times in seconds:
-for col in ["Driver","LapTime","Sector1Time","Sector2Time","Sector3Time"]:
+for col in ["LapTime"]:
     laps_2024[f"{col} (s)"] = laps_2024[col].dt.total_seconds()
 
 # -- 2025 Qualifying session data --
 
-drivers = """Oscar Piastri
-George Russell
-Lando Norris
-Max Verstappen
-Lewis Hamilton
-Charles Leclerc
-Isack Hadjar
-Kimi Antonelli
-Yuki Tsunoda
-Alex Albon
-Esteban Ocon
-Nico Hulkenberg
-Fernando Alonso
-Lance Stroll
-Carlos Sainz
-Pierre Gasly
-Oliver Bearman
-Jack Doohan
-Gabriel Bortoleto
-Liam Lawson"""
 
-drivers = drivers.strip().split('\n')
-
-times = """90.641
-90.723
-90.793
-90.817
-90.927
-91.021
-91.079
-91.103
-91.638
-91.706
-91.625
-91.632
-91.688
-91.773
-91.84
-91.992
-92.018
-92.092
-92.141
-92.174
-"""
-times = times.strip().split('\n')
-
-
-qualifying_2025 = pd.DataFrame({
-    "Driver": drivers,
-    "QualifyingTime (s)": times
-})
-
+qualifying_2025 = pd
 # Create a dictionary with the Driver codes:
 driver_mapping = {  "Alexander Albon": "ALB",   "Fernando Alonso": "ALO",       "Kimi Antonelli": "ANT",
                     "Oliver Bearman": "BEA",    "Gabriel Bortoleto": "BOR",     "Valtteri Bottas": "BOT",
