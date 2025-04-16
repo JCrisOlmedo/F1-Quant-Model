@@ -1,9 +1,6 @@
 import sys
 import pandas as pd
 
-
-
-
 def qf_cleanser(race,data):
     # Split into lines
     lines = data.strip().split('\n')
@@ -25,7 +22,7 @@ def qf_cleanser(race,data):
 
 
     # Clean drivers names
-    df['Driver'] = df['Driver'].str.split(" ", n=1).str[1]
+    df['Driver'] = df['Driver'].str.replace(r'^\s*\d+\)\s*', '', regex=True)
 
     # Time processing to total seconds:
 
@@ -44,16 +41,7 @@ def qf_cleanser(race,data):
     for i in range(11, 21):
         df["QualifyingTime (s)"][i] = float(df["Minutes"][i])*60+float(df["Seconds"][i])
 
-    race = f"/Quant Model for F1/QualifyingData{race}.csv"
+
     qualy_data =df[["Driver","QualifyingTime (s)"]]
-    qualy_data.to_csv(race)
-
-if __name__ == "__main__":
-    # ------ INPUT ------
-    # Read multiline input
-    race = input("What's this race?\n")
-
-    print("Paste your lines (Ctrl+D to end):")
-    data = sys.stdin.read()
-    
-    qf_cleanser(race,data)
+    qualy_data.to_csv(race+"QualifyingData.csv")
+    return qualy_data
