@@ -42,6 +42,47 @@ def qf_cleanser(race,data):
         df["QualifyingTime (s)"][i] = float(df["Minutes"][i])*60+float(df["Seconds"][i])
 
 
-    qualy_data =df[["Driver","QualifyingTime (s)"]]
+    driver_mapping = {  "Alexander Albon": "ALB",   "Fernando Alonso": "ALO",       "Kimi Antonelli": "ANT",
+                    "Oliver Bearman": "BEA",    "Gabriel Bortoleto": "BOR",     "Valtteri Bottas": "BOT",
+                    "Franco Colapinto": "COL",  "Nyck de Vries": "DEV",         "Jack Doohan": "DOO",
+                    "Pierre Gasly": "GAS",      "Isack Hadjar": "HAD",          "Lewis Hamilton": "HAM",
+                    "Nico Hülkenberg": "HUL",   "Liam Lawson": "LAW",           "Charles Leclerc": "LEC",
+                    "Kevin Magnussen": "MAG",   "Lando Norris": "NOR",          "Esteban Ocon": "OCO",
+                    "Sergio Pérez": "PER",      "Oscar Piastri": "PIA",         "Daniel Ricciardo": "RIC",
+                    "George Russell": "RUS",    "Carlos Sainz": "SAI",          "Logan Sargeant": "SAR",
+                    "Lance Stroll": "STR",      "Yuki Tsunoda": "TSU",          "Max Verstappen": "VER",
+                    "Zhou Guanyu": "ZHO"
+}
+    
+    df["DriverCode"] = df["Driver"].map(driver_mapping)
+    qualy_data =df[["DriverCode","Driver","QualifyingTime (s)"]]
+    qualy_data.reset_index(drop=True)
     qualy_data.to_csv(race+"QualifyingData.csv")
     return qualy_data
+
+if __name__ == "__main__":
+
+    raw_data = """1) Oscar Piastri	McLaren	1:30.641
+2) George Russell	Mercedes	+0.082
+3) Lando Norris	McLaren	+0.152
+4) Max Verstappen	Red Bull	+0.176
+5) Lewis Hamilton	Ferrari	+0.286
+6) Charles Leclerc	Ferrari	+0.380
+7) Isack Hadjar	Racing Bulls	+0.438
+8) Kimi Antonelli	Mercedes	+0.462
+9) Yuki Tsunoda	Racing Bulls	+0.997
+10) Alex Albon	Williams	+1.065
+Knocked out in Q2
+11) Esteban Ocón	Haas	1:31.625
+12) Nico Hulkenberg	Sauber	1:31.632
+13) Fernando Alonso	Aston Martin	1:31.688
+14) Lance Stroll	Aston Martin	1:31.773
+15) Carlos Sainz	Williams	1:31.840
+Knocked out in Q1
+16) Pierre Gasly	Alpine	1:31.992
+17) Oliver Bearman	Haas	1:32.018
+18) Jack Doohan	Alpine	1:32.092
+19) Gabriel Bortoleto	Sauber	1:32.141
+20) Liam Lawson	Red Bull	1:32.174"""
+
+    qf_cleanser("China",raw_data)
