@@ -6,7 +6,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error
 
 """
-    2024 Australian F1 GP 
+    2025 Australian F1 GP 
 """
 
 # Enable FastF1 caching
