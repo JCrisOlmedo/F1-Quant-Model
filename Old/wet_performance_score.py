@@ -39,6 +39,6 @@ merged_data["PerformanceChange (%)"] = (merged_data["LapTimeDiff (s)"] / merged_
 merged_data["WetPerformanceScore"] = 1 + (merged_data["PerformanceChange (%)"] / 100)
 
 # Print out the wet performance scores for each drive:
-print("\n🌧️Driver Wet Performance Scores (2023 vs. 2022)🌧️: ")
+print("\n🌧️ Driver Wet Performance Scores (2023 vs. 2022) 🌧️: ")
 print(merged_data[["Driver","WetPerformanceScore"]].sort_values(by="WetPerformanceScore"))
 merged_data[["Driver","WetPerformanceScore"]].to_csv("Wet Performance Score.csv")
