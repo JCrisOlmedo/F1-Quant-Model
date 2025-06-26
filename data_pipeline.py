@@ -47,3 +47,15 @@ def pipeline(dir):
     #                 "George Russell": "RUS",    "Carlos Sainz": "SAI",          "Logan Sargeant": "SAR",
     #                 "Lance Stroll": "STR",      "Yuki Tsunoda": "TSU",          "Max Verstappen": "VER",
     #                 "Zhou Guanyu": "ZHO"}
+
+def points(url):
+    og = pd.read_html(url)[1]
+    print(og)
+
+    clean = pd.DataFrame(columns=['Driver','Points'])
+    # clean['Driver'] = og['DRIVER'].str.slice(start=-3)
+    clean['Driver'] = og['Driver'].str.slice(start=-3)
+    # clean['Points'] = og["PTS."]
+    clean['SeasonPoints'] = og["Pts"]
+    
+    return clean

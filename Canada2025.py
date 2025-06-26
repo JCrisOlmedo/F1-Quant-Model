@@ -8,7 +8,7 @@ from sklearn.metrics import mean_absolute_error
 
 
 """
-    2025 Australian F1 GP 
+    2025 Canada F1 GP 
 """
 
 # Enable FastF1 caching
@@ -67,7 +67,7 @@ qf_2025["PredictedRaceTime (s)"] = predicted_lap_times
 qf_2025 = qf_2025.sort_values(by="PredictedRaceTime (s)")
 
 # Print final predictions
-print("\n🏆 Predicted 2025 Australian GP Winner 🏆\n")
+print("\n🏆 Predicted 2025 Canadian GP Winner 🏆\n")
 print(qf_2025[["Driver", "PredictedRaceTime (s)"]])
 
 # Evaluate Model

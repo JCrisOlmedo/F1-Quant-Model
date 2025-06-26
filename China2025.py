@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error
-from qualifying_data_cleaner import qf_cleanser
+from data_pipeline import pipeline
 
 """
     2025 Chinese F1 GP 
